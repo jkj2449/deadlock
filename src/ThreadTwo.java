@@ -12,8 +12,7 @@ public class ThreadTwo extends Thread {
     public void run() {
         synchronized (shared2) {
             shared2.setOwner(NAME);
-            notify();
-
+            
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -22,7 +21,6 @@ public class ThreadTwo extends Thread {
 
             synchronized (shared1) {
                 shared1.setOwner(NAME);
-                notify();
             }
         }
     }
