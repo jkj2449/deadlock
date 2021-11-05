@@ -1,27 +1,16 @@
 public class ThreadTwo extends Thread {
-    private static final String NAME = "ThreadTwo";
-    private final SharedResource shared1;
-    private final SharedResource shared2;
+    private final SharedResource sr;
 
-    public ThreadTwo(SharedResource shared1, SharedResource shared2) {
-        this.shared1 = shared1;
-        this.shared2 = shared2;
+    public ThreadTwo(SharedResource sr) {
+        this.sr = sr;
     }
 
     @Override
     public void run() {
-        synchronized (shared2) {
-            shared2.setOwner(NAME);
-            
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            synchronized (shared1) {
-                shared1.setOwner(NAME);
-            }
+        for (int i = 0; i < 100; i++) {
+            System.out.println("ThreadTwo 자원 요청");
+            sr.withdraw(200);
+            System.out.println("ThreadTwo 자원 해제");
         }
     }
 }

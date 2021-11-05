@@ -1,6 +1,5 @@
 public class Main {
-    private final SharedResource shared1 = new SharedResource("shared1");
-    private final SharedResource shared2 = new SharedResource("shared2");
+    private final SharedResource shared = new SharedResource();
 
     public static void main(String[] args) throws InterruptedException {
         Main main = new Main();
@@ -8,13 +7,15 @@ public class Main {
     }
 
     public void start() throws InterruptedException {
-        ThreadOne one = new ThreadOne(shared1, shared2);
-        ThreadTwo two = new ThreadTwo(shared1, shared2);
+        ThreadOne one = new ThreadOne(shared);
+        ThreadTwo two = new ThreadTwo(shared);
 
         one.start();
         two.start();
 
         one.join();
         two.join();
+
+        System.out.println("종료");
     }
 }

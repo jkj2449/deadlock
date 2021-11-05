@@ -1,17 +1,27 @@
 public class SharedResource {
-    private final String name;
-    private String owner;
+    private int total = 0;
 
-    public SharedResource(String name) {
-        this.name = name;
+    public synchronized void withdraw(int amount) {
+        try {
+            while(total < amount) {
+                //wait();
+                if(total > amount) {
+                    break;
+                }
+            }
+
+            this.total = total - amount;
+            System.out.println("withdraw total = " + total);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public synchronized void setOwner(String owner) {
-        System.out.println(this.name + " owner = " + owner);
-        this.owner = owner;
-    }
+    public synchronized void deposit(int amount) {
+        this.total = total + amount;
+        System.out.println("deposit total = " + total);
 
-//    public String getOwner() {
-//        return owner;
-//    }
+        notifyAll();
+    }
 }
